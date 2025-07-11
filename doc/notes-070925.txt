@@ -1,0 +1,4 @@
+07/09/25
+devel@pi5-90:~ $ git clone https://github.com/develone/nanoV.git -b test-dev
+devel@pi5-90:~ $ cd nanoV/pico_ice/
+
