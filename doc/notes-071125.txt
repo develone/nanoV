@@ -1,0 +1,93 @@
+07/11/25
+ make clean
+rm nanoV.asc nanoV.bin nanoV.json
+ make
+Info: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 19.23 MHz (PASS at 16.00 MHz)
+
+# Convert to bitstream using IcePack
+/home/devel/oss-cad-suite//bin/icepack nanoV.asc nanoV.bin
+bin2uf2 -o nanoV.uf2 0x00000000 nanoV.bin
+addr=0x00000000 file=nanoV.bin
+
+ cp nanoV.uf2 /media/devel/pico-ice/
+
+RP2040 is running pico-ice default firmware.
+ UA+-----------------------------------------------------------------------+   
+    | A -    Serial Device      : /dev/ttyACM0                              |   
+Seri| B - Lockfile Location     : /var/lock                                 |   
+  ht| C -   Callin Program      :                                           |   
+    | D -  Callout Program      :                                           |   
+pico| E -    Bps/Par/Bits       : 115200 8N1                                |   
+    | F - Hardware Flow Control : No                                        |   
+pico| G - Software Flow Control : No                                        |   
+   h| H -     RS485 Enable      : No                                        |det
+    | I -   RS485 Rts On Send   : No                                        |   
+Seri| J -  RS485 Rts After Send : No                                        |   
+  v | K -  RS485 Rx During Tx   : No                                        |   
+    | L -  RS485 Terminate Bus  : No                                        |   
+Seri| M - RS485 Delay Rts Before: 0                                         |   
+  UA| N - RS485 Delay Rts After : 0                                         |   
+  UA|                                                                       |   
+    |    Change which setting?                                              |   
+Seri+-----------------------------------------------------------------------+   
+
+devel@pi5-80:~ $ minicom ACM0
+
+Welcome to minicom 2.8
+
+OPTIONS: I18n 
+Port /dev/ttyACM0, 05:14:51
+
+Press CTRL-A Z for help on special keys
+
+
+Serial port #2 - forwarding to SPI:
+  https://pico-ice.tinyvision.ai/group__ice__usb.html#autotoc_md2
+
+pico2-ice> 
+
+pico-ice default firmware
+   https://github.com/tinyvision-ai-inc/pico-ice/tree/main/Firmware/pico-ice-det
+
+Serial port #0 - this shell, with commands:
+  v - print pico-ice-sdk version
+
+Serial port #1 - forwarding to UART
+  UART TX on RP20 = ICE27
+  UART RX on RP30 = ICE25
+                                                                                
+Serial port #2 - forwarding to SPI:                                             
+  https://pico-ice.tinyvision.ai/group__ice__usb.html#autotoc_md2               
+                                                                                
+pico2-ice>                                                                      
+                                                                                
+pico-ice default firmware                                                       
+   https://github.com/tinyvision-ai-inc/pico-ice/tree/main/Firmware/pico-ice-det
+                                                                                
+Serial port #0 - this shell, with commands:                                     
+  v - print pico-ice-sdk version                                                
+                                                                                
+Serial port #1 - forwarding to UART                                             
+  UART TX on RP20 = ICE27                                                       
+  UART RX on RP30 = ICE25                                                       
+                                                                                
+Serial port #2 - forwarding to SPI:                                             
+  https://pico-ice.tinyvision.ai/group__ice__usb.html#autotoc_md2               
+                                                                                
+pico2-ice>                                                                      
+                                                                                
+pico-ice default firmware                                                       
+   https://github.com/tinyvision-ai-inc/pico-ice/tree/main/Firmware/pico-ice-det
+                                                                                
+Serial port #0 - this shell, with commands:                                     
+  v - print pico-ice-sdk version                                                
+                                                                                
+Serial port #1 - forwarding to UART                                             
+  UART TX on RP20 = ICE27                                                       
+  UART RX on RP30 = ICE25                                                       
+                                                                                
+Serial port #2 - forwarding to SPI:                                             
+  https://pico-ice.tinyvision.ai/group__ice__usb.html#autotoc_md2               
+                                                                                
+pico2-ice>
+
