@@ -1,9 +1,3 @@
-YOSYS = $(OSS_CAD_SUITE)/bin/yosys
-NEXTPNR = $(OSS_CAD_SUITE)/bin/nextpnr-ice40
-ICEPACK = $(OSS_CAD_SUITE)/bin/icepack
-DFU_UTIL = $(OSS_CAD_SUITE)/bin/dfu-util
-BIN2UF2 = bin2uf2
-
 # Project setup
 PROJ      = nanoV
 
@@ -17,7 +11,7 @@ pico_ice:
 	#verilator --lint-only -Wall -Wno-DECLFILENAME -Wno-MULTITOP $(FILES)
 
 	# synthesize using Yosys
-	$(YOSYS) -p "synth_ice40 -abc9 -device u -top nanoV_top -json $(PROJ).json" -DICE40 $(FILES) > yosys.log
+	yosys -p "synth_ice40 -abc9 -device u -top nanoV_top -json $(PROJ).json" -DICE40 $(FILES) > yosys.log
 	@grep Warn yosys.log || true
 	@grep Error yosys.log || true
 	@grep "   Number of cells" yosys.log
@@ -26,14 +20,14 @@ pico_ice:
 	@echo
 
 	# Place and route using nextpnr
-	$(NEXTPNR) -r --up5k --json $(PROJ).json --package sg48 --asc $(PROJ).asc --opt-timing --pcf pico_ice.pcf -l mynextpnr.log
+	./nextpnr.sh -r --up5k --json $(PROJ).json --package sg48 --asc $(PROJ).asc --opt-timing --pcf pico_ice.pcf
 	@grep Warn nextpnr.log || true
 	@grep Error nextpnr.log || true
 	@grep "Max frequency.*clk" nextpnr.log | tail -1
 	@echo
 
 	# Convert to bitstream using IcePack
-	$(ICEPACK) $(PROJ).asc $(PROJ).bin
+	icepack $(PROJ).asc $(PROJ).bin
 	bin2uf2 -o $(PROJ).uf2 0x00000000 $(PROJ).bin
 
 stats:
@@ -51,3 +45,4 @@ stats:
 
 clean:
 	rm $(PROJ).asc $(PROJ).bin $(PROJ).json
+
